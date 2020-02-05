@@ -1,0 +1,14 @@
+## Interface: 60100
+## Version: 5.4.0.2
+## Title: Debuff Filter
+## Notes: Filter out specific debuffs and buffs into separate frames, and organize cooldowns in frames
+## Author: porkbone (mwayne@gmail.com), aborgolotto, Kossorri
+## SavedVariables: DebuffFilterDB, DebuffFilter_Config
+## OptionalDeps: ButtonFacade
+# OptionalDeps: LibDualSpec-1.0
+localization.lua
+embeds.xml
+#@no-lib-strip@
+libs\LibDualSpec-1.0\LibDualSpec-1.0.lua
+#@end-no-lib-strip@
+DebuffFilter.xml

@@ -1,0 +1,2 @@
+Adirelle:
+	- Update the alternate profile name before switching to the new profile so :GetDualSpecProfile() returns the proper value during the callback.

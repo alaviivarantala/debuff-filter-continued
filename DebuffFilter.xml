@@ -1,0 +1,492 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+	<Script file="DebuffFilter.lua"/>
+
+	<!--  All these textures and the checkbutton was taken from ActionButtonTemplate.xml from the FrameXML folder.
+		This exists in Blizzard's interface zip file.  The absolute dimensions were changed, and the scripts 
+		and cooldown time were added -->
+	
+	<Texture name="ActionBarFlyoutButton-ArrowUp" file="Interface\Buttons\ActionBarFlyoutButton" virtual="true" >
+		<Size x="23" y="11"/>	
+		<TexCoords left="0.62500000" right="0.98437500" top="0.74218750" bottom="0.82812500"/>	
+	</Texture>
+	<Texture name="ActionBarFlyoutButton-IconFrame" file="Interface\Buttons\ActionBarFlyoutButton" virtual="true" >
+		<Size x="42" y="42"/>	
+		<TexCoords left="0.01562500" right="0.67187500" top="0.39843750" bottom="0.72656250"/>	
+	</Texture>
+	<Texture name="ActionBarFlyoutButton-IconShadow" file="Interface\Buttons\ActionBarFlyoutButton" virtual="true" >
+		<Size x="48" y="48"/>	
+		<TexCoords left="0.01562500" right="0.76562500" top="0.00781250" bottom="0.38281250"/>	
+	</Texture>
+	
+	<CheckButton name="DebuffFilter_CooldownButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="30" y="30"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon" parentKey="icon"/>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel = "1">
+				<Texture name="$parentFlash" file="Interface\Buttons\UI-QuickslotRed" hidden="true"/>
+				<Texture name="$parentFlyoutBorder" inherits="ActionBarFlyoutButton-IconFrame" parentKey="FlyoutBorder" hidden="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+				<Texture name="$parentFlyoutBorderShadow" inherits="ActionBarFlyoutButton-IconShadow" parentKey="FlyoutBorderShadow" hidden="true">
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="2">
+				<Texture name="$parentFlyoutArrow" inherits="ActionBarFlyoutButton-ArrowUp" parentKey="FlyoutArrow" hidden="true"/>
+				<FontString name="$parentHotKey" inherits="NumberFontNormalSmallGray" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="30" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="-2" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentCount" inherits="NumberFontNormal" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-2" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parentName" inherits="GameFontHighlightSmallOutline">
+					<Size>
+						<AbsDimension x="30" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<Texture name="$parentBorder" file="Interface\Buttons\UI-ActionButton-Border" hidden="true" alphaMode="ADD">
+					<Size>
+						<AbsDimension x="52" y="52"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate">
+				<Size x="30" y="30"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors> 
+			</Cooldown>
+		</Frames>
+		<NormalTexture name="$parentNormalTexture" urgency="5" file="Interface\Buttons\UI-Quickslot2">
+			<Anchors>
+				<Anchor point="TOPLEFT" x="-12" y="12"/>
+				<Anchor point="BOTTOMRIGHT" x="12" y="-12"/>
+			</Anchors>
+		</NormalTexture>
+		<PushedTexture file="Interface\Buttons\UI-Quickslot-Depress"/>
+		<HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
+		<CheckedTexture alphaMode="ADD" urgency="5" file="Interface\Buttons\CheckButtonHilight"/>
+		<Frames>
+			<Frame name="$parentDuration" hidden="true">
+				<Layers>
+					<Layer>
+					    <Texture name="$parentBckgrnd">
+						 <Color r="0.0" g="0.0" b="0.0" a="1.0"/>
+					    </Texture>
+						<FontString name="$parentString" inherits="GameFontNormalSmall"/>
+				    	</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="0" y="12"/>
+				</Size>
+				<Scripts>
+					<OnLoad>
+						<!-- length of time string - when changed, width of black strip 
+						behind time is adjusted -->
+						self.timeLen = 0
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Frame name="$parentButtonName" hidden="false">
+				<Layers>
+					<Layer>
+					    <Texture name="$parentBckgrnd">
+						 <Color r="0.0" g="0.0" b="0.0" a="1.0"/>
+					    </Texture>
+						<FontString name="$parentString" inherits="GameFontNormalSmall"/>
+					</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="BOTTOM" relativePoint="TOP">
+					<Offset>
+						<AbsDimension x="0" y="1"/>
+					</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="0" y="12"/>
+				</Size>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				DebuffFilter_Button_OnLoad(self);
+			</OnLoad>
+			<OnEnter>
+				if (DebuffFilter.PlayerConfig.General.tooltips) then
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+					local isLink
+					if self.DBFitemID then
+						_,isLink = GetItemInfo(self.DBFitemID)
+					else
+						isLink = GetSpellLink(self.DBFname)
+					end
+					if isLink then
+						GameTooltip:SetHyperlink(isLink)
+					end	
+				end
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnMouseDown>
+				DebuffFilter_OnMouseDown(self, button);
+			</OnMouseDown>
+			<OnMouseUp>
+				DebuffFilter_OnMouseUp(self, button);
+			</OnMouseUp>
+			<OnHide>
+				self:GetParent():StopMovingOrSizing();
+			</OnHide>
+		</Scripts>
+	</CheckButton>
+	<Button name="DebuffFilter_BuffButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="30" y="30"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon"/>
+				<!-- current number of debuff/buff's stack -->
+				<FontString name="$parentCount" inherits="NumberFontNormalSmall">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-1" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<!-- number of same debuffs/buffs that are combined -->
+				<FontString name="$parentCount2" inherits="NumberFontNormalSmall">
+					<Color r="1.0" g="0.82" b="0"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="-1" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentBorder" file="Interface\Buttons\UI-Debuff-Overlays">
+					<Size>
+						<AbsDimension x="33" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- display time remaining for a debuff/buff as a cooldown on the debuff/buff 
+			itself as a shadow rotating clockwise -->
+			<Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate" reverse="true" hidden="true">
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Cooldown>
+			<Frame name="$parentDuration" hidden="true">
+				<Layers>
+					<Layer>
+					    <Texture name="$parentBckgrnd">
+						 <Color r="0.0" g="0.0" b="0.0" a="1.0"/>
+					    </Texture>
+						<FontString name="$parentString" inherits="GameFontNormalSmall"/>
+				    	</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="0" y="12"/>
+				</Size>
+			</Frame>
+			<Frame name="$parentButtonName" hidden="false">
+				<Layers>
+					<Layer>
+					    <Texture name="$parentBckgrnd">
+						 <Color r="0.0" g="0.0" b="0.0" a="1.0"/>
+					    </Texture>
+						<FontString name="$parentString" inherits="GameFontNormalSmall"/>
+				    	</Layer>
+				</Layers>
+				<Anchors>
+					<Anchor point="BOTTOM" relativePoint="TOP">
+					<Offset>
+						<AbsDimension x="0" y="1"/>
+					</Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="0" y="12"/>
+				</Size>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				DebuffFilter_Button_OnLoad(self);
+			</OnLoad>
+			<OnEnter>
+				if (DebuffFilter.PlayerConfig.General.tooltips) then
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+					if self.isdebuff and self.index > 0 then
+						GameTooltip:SetUnitDebuff(self.target, self.index);
+					else
+						GameTooltip:SetUnitBuff(self.target, self.index);
+					end	
+				end
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnMouseDown>
+				DebuffFilter_OnMouseDown(self, button);
+			</OnMouseDown>
+			<OnMouseUp>
+				DebuffFilter_OnMouseUp(self, button);
+			</OnMouseUp>
+			<OnHide>
+				self:GetParent():StopMovingOrSizing();
+			</OnHide>
+		</Scripts>
+	</Button>
+	<Frame name="DebuffFilter_FrameTemplate" parent="DebuffFilterFrame" frameStrata="MEDIUM" toplevel="true" movable="true" virtual="true">
+		<Size>
+			<AbsDimension x="30" y="30"/>
+		</Size>
+		<Layers>
+			<Layer level="OVERLAY">
+				<!-- display total number of debuffs/buffs raider has -->
+				<FontString name="$parentCount" inherits="GameFontNormal" hidden="true">
+					<Size>
+						<AbsDimension x="30" y="12"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT" relativePoint="LEFT"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	<!-- backdrop placed over frame to aid in moving it and to allow frame to be moved
+		even if frames are locked -->
+	<Button name="DebuffFilter_BackdropTemplate" hidden="true" virtual="true" frameStrata="DIALOG">
+		<Size>
+			<AbsDimension x="40" y="40"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Scripts>
+			<OnEnter>
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				GameTooltip:SetText(DFILTER_BACKDROP_TOOLTIP);
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnMouseDown>
+				DebuffFilter_OnMouseDown(self, button);
+			</OnMouseDown>
+			<OnMouseUp>
+				DebuffFilter_OnMouseUp(self, button);
+			</OnMouseUp>
+			<OnHide>
+				self:GetParent():StopMovingOrSizing();
+			</OnHide>
+		</Scripts>
+	</Button>
+	<!-- Title of frame shown when backdrops are displayed -->
+	<FontString name="DebuffFilter_NameTemplate" inherits="GameFontNormal" virtual="true">
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset>
+					<AbsDimension x="0" y="15"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</FontString>
+	<Frame name="DebuffFilterFrame" parent="UIParent">
+	</Frame>
+	<Frame name="DebuffFilter_DebuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="578" y="335"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Debuffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+	<Frame name="DebuffFilter_BuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="478" y="335"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Buffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+	<Frame name="DebuffFilter_PDebuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="578" y="275"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Player Debuffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+	<Frame name="DebuffFilter_PBuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="478" y="275"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Player Buffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+	<Frame name="DebuffFilter_FDebuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="578" y="155"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Focus Debuffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+	<Frame name="DebuffFilter_FBuffFrame" inherits="DebuffFilter_FrameTemplate">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativepoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="478" y="155"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="$parentBackdrop" inherits="DebuffFilter_BackdropTemplate">
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString text="Focus Buffs" inherits="DebuffFilter_NameTemplate"/>
+					</Layer>
+				</Layers>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>
